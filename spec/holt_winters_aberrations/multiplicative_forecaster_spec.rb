@@ -111,5 +111,112 @@ describe HoltWintersAberrations::MultiplicativeForecaster do
         expect((0..(data.size - s - 1)).to_a.map{ |i| calculated_values[i] - data[s+i] }.all?{|v| v.abs < 0.04}).to eq(true)
       end
     end
+
+    describe "trivial data" do
+      let(:data) { [1,1,1,1,] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 2 }
+
+      it "returns a numeric value" do
+        expect(forecaster.forecast(2)).to eq(1)
+        expect(forecaster.forecast(3)).to eq(1)
+      end
+    end
+
+    describe "minimal valid data" do
+      let(:data) { [1,2,2,1] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.forecast(4)).to eq(1)
+        expect(forecaster.forecast(5)).to eq(2)
+      end
+    end
+  end
+
+  describe "predicted deviation" do
+    describe "minimal valid data" do
+      let(:data) { [1,3,2,4,1,3,2,4] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.predicted_deviation(4)).to eq(0)
+        expect(forecaster.predicted_deviation(5)).to eq(0)
+        expect(forecaster.predicted_deviation(6)).to eq(0)
+        expect(forecaster.predicted_deviation(7)).to eq(0)
+      end
+    end
+  end
+
+  describe "aberration" do
+    describe "no aberration" do
+      let(:data) { [1,2,2,1, 1,2,2,1] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.aberration(4)).to eq(0)
+        expect(forecaster.aberration(5)).to eq(0)
+        expect(forecaster.aberration(6)).to eq(0)
+        expect(forecaster.aberration(7)).to eq(0)
+      end
+    end
+
+    describe "one aberration" do
+      let(:data) { [1,2,2,1, 1,2+7,2,1] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.aberration(4)).to eq(0)
+        expect(forecaster.aberration(5)).to eq(7)
+        expect(forecaster.aberration(6)).to eq(0)
+        expect(forecaster.aberration(7)).to eq(0)
+      end
+    end
+  end
+
+  describe "aberration_fraction" do
+    describe "no aberration" do
+      let(:data) { [1,2,2,1, 1,2,2,1] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.aberration_fraction(4)).to eq(0)
+        expect(forecaster.aberration_fraction(5)).to eq(0)
+        expect(forecaster.aberration_fraction(6)).to eq(0)
+        expect(forecaster.aberration_fraction(7)).to eq(0)
+      end
+    end
+  end
+
+  describe "small aberration" do
+      let(:data) { [1,2,2,1, 1,2 + 0.01,2,1] }
+      let(:α) { 0 }
+      let(:β) { 0 }
+      let(:γ) { 0 }
+      let(:s) { 4 }
+
+      it "returns a numeric value" do
+        expect(forecaster.aberration_fraction(4)).to eq(0)
+        expect(forecaster.aberration_fraction(5).round(3)).to eq(0.005)
+        expect(forecaster.aberration_fraction(6)).to eq(0)
+        expect(forecaster.aberration_fraction(7)).to eq(0)
+      end
   end
 end
