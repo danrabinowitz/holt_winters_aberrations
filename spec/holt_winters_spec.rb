@@ -6,6 +6,7 @@ describe HoltWinters do
   end
 
   it 'does something useful' do
+    skip
     expect(false).to eq(true)
   end
 end
