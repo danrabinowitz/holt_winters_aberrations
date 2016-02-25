@@ -13,6 +13,8 @@ module HoltWinters
       @seasonal = {}
     end
 
+    attr_reader :α, :β, :γ, :s
+
     def forecast(t)
       if t < s
         raise NotImplementedError, "forecast only works for periods after s"
@@ -66,22 +68,6 @@ module HoltWinters
 
     def trend_s # b_t
       (@data[s-1] - @data[0]).to_r / (s-1)
-    end
-
-    def α
-      @α
-    end
-
-    def β
-      @β
-    end
-
-    def γ
-      @γ
-    end
-
-    def s
-      @s
     end
 
     def data(t)
