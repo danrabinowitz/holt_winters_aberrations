@@ -53,9 +53,8 @@ module HoltWintersAberrations
 
     def aberration_fraction(t, delta: 3)
       raise NotImplementedError, "aberration only works for periods after s" if t < s
-
-      scale = [forecast(t).abs, 1/1000].max
-      aberration(t, delta: delta) / scale
+      scale = [forecast(t).abs, 1/1000.to_r].max
+      aberration(t, delta: delta).abs / scale
     end
 
     def aberration?(t, delta: 3, cutoff: 0.1)
@@ -68,7 +67,12 @@ module HoltWintersAberrations
       elsif t >= @data.size
           level(@data.size-1)
       else
-        α * data(t) / seasonal(t-s) + (1 - α) * (level(t-1) + trend(t - 1))
+        non_zero_seasonal = if seasonal(t-s) == 0
+          seasonal(t-s) + 1/1000.to_r
+        else
+          seasonal(t-s)
+        end
+        α * data(t) / non_zero_seasonal + (1 - α) * (level(t-1) + trend(t - 1))
       end
     end
 
