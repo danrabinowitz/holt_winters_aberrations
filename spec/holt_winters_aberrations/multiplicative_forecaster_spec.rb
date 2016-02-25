@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe HoltWinters::MultiplicativeForecaster do
-  let(:forecaster) { HoltWinters::MultiplicativeForecaster.new(data: data, α: α, β: β, γ: γ, s: s) }
+describe HoltWintersAberrations::MultiplicativeForecaster do
+  let(:forecaster) { HoltWintersAberrations::MultiplicativeForecaster.new(data: data, α: α, β: β, γ: γ, s: s) }
 
   describe "known data" do
     let(:data) { [112,118,132,129,121,135,148,148,136,119,104,118,115,126,141,135,125,149,170,170,158,133,114,140,145,150,178,163,172,178,199,199,184,162,146,166] }

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'holt_winters/version'
+require 'holt_winters_aberrations/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "holt_winters"
-  spec.version       = HoltWinters::VERSION
+  spec.name          = "holt_winters_aberrations"
+  spec.version       = HoltWintersAberrations::VERSION
   spec.authors       = ["Dan Rabinowitz"]
   spec.email         = ["TODO: Write your email address"]
 

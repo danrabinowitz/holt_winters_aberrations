@@ -1,4 +1,4 @@
-module HoltWinters
+module HoltWintersAberrations
   class MultiplicativeForecaster
     def initialize(data:, α:, β:, γ:, s:)
       @data = data

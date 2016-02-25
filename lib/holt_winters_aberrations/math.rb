@@ -1,4 +1,4 @@
-module HoltWinters
+module HoltWintersAberrations
   module Math
     module_function
 
